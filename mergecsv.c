@@ -183,10 +183,15 @@ int main(int argc, char *argv[]) {
     fgets(inpbuff, 255, (FILE*)input_file);   //forward input file pointer
     while (1) {
 
-        if (feof(input_file))
-            break;
         if (feof(merge_file))
             break;
+
+        if (feof(input_file)) {
+            fputs(mergebuff, output_file);
+            fgets(mergebuff, 512, (FILE*)merge_file);
+            continue;
+        }
+            
 
         if (check_date(inpbuff, mergebuff)) {
             merge_line(inpbuff, mergebuff, outbuff, column);
